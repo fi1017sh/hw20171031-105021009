@@ -23,34 +23,34 @@ public class MainFrame extends JFrame{
     private JMenu jmG = new JMenu("Game");
     private JMenu jmA = new JMenu("About");
     private JMenuItem jmiExit = new JMenuItem("Exit");
-    private JMenuItem jmiGame = new JMenuItem("Loto");
+    private JMenuItem jmiGame = new JMenuItem("Loto game");
     private JMenuItem jminum = new JMenuItem("Number");
     private JInternalFrame jif = new JInternalFrame();
     private JInternalFrame jifnum = new JInternalFrame();
 
-    //-----------------------------樂透視窗
+    ///////////////////////////////////樂透視窗///////////////////////////////////
     private Container jifcp;
     private JPanel jpl = new JPanel(new GridLayout(1,6,5,5));
-    private JPanel jpl1 = new JPanel(new GridLayout(1,2,5,5));
-    private JButton jbtcls = new JButton("Close");
-    private JButton jbtgen = new JButton("Generate");
-    private JLabel jlb[] = new JLabel[6];
+    private JPanel jpnl = new JPanel(new GridLayout(1,2,5,5));
+    private JButton jbcls = new JButton("Close");
+    private JButton jbgen = new JButton("Generate");
+    private JLabel jlab[] = new JLabel[6];
     private int data[] = new int[6];
     private Random rnd = new Random(System.currentTimeMillis());
 
 
-    //------------------------------亂數計算機
+    ///////////////////////////////亂數計算機///////////////////////////////////////
     private Container jifnumcp;
     private JTextField jtf = new JTextField();
     private JPanel jpn = new JPanel(new GridLayout(4,3));
-    private JButton jbtn[] = new JButton[10];
-    private JButton jbtndelete = new JButton("Delete");
-    private JButton jbtndot = new JButton(".");
+    private JButton jbs[] = new JButton[10];
+    private JButton jbdelete = new JButton("Delete");
+    private JButton jbdot = new JButton(".");
     private int ran;
     private Random random = new Random();
     private int[] arr = new int[10];
 
-    //------------------------------更改使用者視窗
+    /////////////////////////////更改使用者視窗////////////////////////////////////
     private JPanel jpl2 = new JPanel(new GridLayout(2,3,5,5));
     private JMenuItem jmifont = new JMenuItem("Font");
     private JLabel jlbfamily = new JLabel("Family");
@@ -61,7 +61,7 @@ public class MainFrame extends JFrame{
     private String[] str = {"PLAIN","BOLD","ITALIC","BOLD+ITALIC"};
     private JComboBox jcb = new JComboBox(str);
 
-    //-------------------------------內部檔案讀取器
+    ////////////////////////////內部檔案讀取器///////////////////////////////////
     private JMenuItem jmiBook = new JMenuItem("Book");
     private JInternalFrame jifrea = new JInternalFrame();
     private Container jifreacp;
@@ -71,19 +71,24 @@ public class MainFrame extends JFrame{
     private JMenuItem jminew = new JMenuItem("New");
     private JMenuItem jmiclose = new JMenuItem("Close");
     private JFileChooser jfc = new JFileChooser();
-    //--------表格
+
+    ///////////////////////////////連結LoginFrame///////////////////////////////
+    private LoginFrame loginframe;
+    public MainFrame(LoginFrame loginfr){
+        loginframe = loginfr;
+        initComp();
+    }
+
+
+    ////////////////////////////////表格//////////////////////////////////////
     private String[] heading = {"書名","作者","出版社","價格","類別"};
     private int number;
     private String[][] action = new String[30][5];
     private JTable jtb = new JTable(action, heading);
     private String [] Items = new String[5];
     private JScrollPane jsp = new JScrollPane(jtb);
-    //------------------------------連結LoginFrame
-    private LoginFrame loginframe;
-    public MainFrame(LoginFrame loginfr){
-        loginframe = loginfr;
-        initComp();
-    }
+
+
     private void initComp(){
         this.setBounds(scrW/2-frmW/2,scrH/2-frmH/2,frmW,frmH);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -98,7 +103,7 @@ public class MainFrame extends JFrame{
         this.setContentPane(jdp);
         jif.setBounds(0,0,200,80);
 
-        //----------------主視窗上排按鍵
+        //////////////////////////主視窗上排按鍵///////////////////////////
         jmb.add(jmF);
         jmb.add(jmS);
         jmb.add(jmG);
@@ -152,35 +157,35 @@ public class MainFrame extends JFrame{
             }
         });
 
-        //------------------------------------樂透
+        ////////////////////////////樂透//////////////////////////////////
         jifnum.setBounds(0,0,300,400);
         jifcp = jif.getContentPane();
         jifcp.add(jpl, BorderLayout.CENTER);
-        jifcp.add(jpl1, BorderLayout.SOUTH);
-        jpl1.add(jbtcls);
-        jpl1.add(jbtgen);
+        jifcp.add(jpnl, BorderLayout.SOUTH);
+        jpnl.add(jbcls);
+        jpnl.add(jbgen);
 
         for(int i=0; i<6; i++){
-            jlb[i] = new JLabel(Integer.toString(data[i]));
-            jpl.add(jlb[i]);
+            jlab[i] = new JLabel(Integer.toString(data[i]));
+            jpl.add(jlab[i]);
         }
 
 
-        jbtcls.addActionListener(new ActionListener() {
+        jbcls.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 jif.dispose();
             }
         });
 
-        jbtgen.addActionListener(new ActionListener() {
+        jbgen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 lotoGenerate();
             }
         });
 
-        //------------------------------------鍵盤
+        ///////////////////////////////亂數計算機///////////////////////////////
         jifnumcp = jifnum.getContentPane();
         jifnumcp.setLayout(new BorderLayout(5,5));
         jifnumcp.add(jtf, BorderLayout.NORTH);
@@ -199,9 +204,9 @@ public class MainFrame extends JFrame{
 
         for(int i =0; i<10 ;i++) {
 
-            jbtn[i] = new JButton(Integer.toString(arr[i]));
-            jpn.add(jbtn[i]);
-            jbtn[i].addActionListener(new ActionListener() {
+            jbs[i] = new JButton(Integer.toString(arr[i]));
+            jpn.add(jbs[i]);
+            jbs[i].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     JButton tempbtn = (JButton) e.getSource();
@@ -210,22 +215,22 @@ public class MainFrame extends JFrame{
             });
         }
 
-        jpn.add(jbtndot);
-        jbtndot.addActionListener(new ActionListener() {
+        jpn.add(jbdot);
+        jbdot.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 jtf.setText(jtf.getText()+".");
             }
         });
-        jpn.add(jbtndelete);
-        jbtndelete.addActionListener(new ActionListener() {
+        jpn.add(jbdelete);
+        jbdelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 jtf.setText("");
             }
         });
 
-        //-----------------------------------更改使用者視窗
+        //////////////////////更改使用者視窗/////////////////////////
         jmS.add(jmifont);
         jpl2.add(jlbfamily);
         jpl2.add(jlbstyle);
@@ -255,7 +260,7 @@ public class MainFrame extends JFrame{
             }
         });
 
-        //--------------------------------------------檔案讀取器
+        //////////////////////////////檔案讀取器///////////////////////////////////
         jifreacp = jifrea.getContentPane();
         jifreacp.setLayout(new BorderLayout(5,5));
         jifreacp.add(jsp, BorderLayout.CENTER);
@@ -311,7 +316,7 @@ public class MainFrame extends JFrame{
 
     }
 
-    //------------------------------樂透亂數
+    /////////////////////////函式：樂透亂數/////////////////////////////
     private void lotoGenerate(){
         int i=0;
         while (i<6){
@@ -325,7 +330,7 @@ public class MainFrame extends JFrame{
                 j++;
             }
             if(flag){
-                jlb[i].setText((Integer.toString(data[i])));
+                jlab[i].setText((Integer.toString(data[i])));
                 i++;
             }
         }
